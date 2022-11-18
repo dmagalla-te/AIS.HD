@@ -1,0 +1,242 @@
+THOUSANDEYES-ALARM-SNMP-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	enterprises,
+	MODULE-IDENTITY,
+	OBJECT-TYPE,
+	NOTIFICATION-TYPE,
+	Unsigned32
+		FROM SNMPv2-SMI
+	RowStatus
+		FROM SNMPv2-TC
+	OBJECT-GROUP,
+	NOTIFICATION-GROUP
+		FROM SNMPv2-CONF;
+
+thousandeyesAlarmMIB MODULE-IDENTITY
+	LAST-UPDATED "202105242211Z"	-- May 24, 2021, 10:11:00 PM
+	ORGANIZATION "ThousandEyes, Inc."
+	CONTACT-INFO
+		"paulo@thousandeyes.com"
+	DESCRIPTION
+		"ThousandEyes Alarm MIB"
+	-- 1.3.6.1.4.1.52304 --
+	-- 1.3.6.1.4.1.52304
+	::= { enterprises 52304 }
+
+
+
+thousandeyesTrap NOTIFICATION-TYPE
+	OBJECTS {
+		trapAlertDateStart,
+		trapAlertDateEnd,
+		trapEventType,
+		trapAlertTestId,
+		trapAlertPermalink,
+		trapAlertTestName,
+		trapAlertRuleExpression,
+		trapSeverity,
+		trapAgentScope}
+	STATUS  current
+	DESCRIPTION
+		""
+	-- 1.3.6.1.4.1.52304.29
+	::= { thousandeyesAlarmMIB 29 }
+
+thousandeyesObjGroup OBJECT-GROUP
+	OBJECTS {
+		thousandeyesTrap,
+		trapAlertEventId,
+		trapAlertType,
+		trapAlertRuleName,
+		trapAlertDateStart,
+		trapAlertDateEnd,
+		trapEventType,
+		trapAlertTestId,
+		trapAlertPermalink,
+		trapAlertTestName,
+		trapAlertRuleExpression,
+		trapSeverity,
+		trapAgentScope,
+		trapAgentName,
+		trapStartMetrics,
+		trapEmailMessage }
+	STATUS  current
+	DESCRIPTION
+		"Objects in the ThousandEyes SNMP trap."
+	-- 1.3.6.1.4.1.52304.4 ---- 1.3.6.1.4.1.52304.4
+::= { thousandeyesAlarmMIB 4 }
+
+-- Scalars and Tables
+--
+
+thousandeyesObjects OBJECT IDENTIFIER
+	-- 1.3.6.1.4.1.52304.1
+::= { thousandeyesAlarmMIB 1 }
+
+-- Notification Types
+--
+
+thousandeyesEvents OBJECT IDENTIFIER
+	-- 1.3.6.1.4.1.52304.2
+::= { thousandeyesAlarmMIB 2 }
+
+trapAlertEventId OBJECT-TYPE
+	SYNTAX  OCTET STRING
+	MAX-ACCESS read-only
+	STATUS  current
+	DESCRIPTION
+		"Identifier of the event."
+	-- 1.3.6.1.4.1.52304.30
+::= { thousandeyesAlarmMIB 30 }
+
+
+trapAlertType OBJECT-TYPE
+	SYNTAX  OCTET STRING
+	MAX-ACCESS read-only
+	STATUS  current
+	DESCRIPTION
+		"The type of the alert."
+	-- 1.3.6.1.4.1.52304.31
+::= { thousandeyesAlarmMIB 31 }
+
+
+trapAlertRuleName OBJECT-TYPE
+	SYNTAX  OCTET STRING
+	MAX-ACCESS read-only
+	STATUS  current
+	DESCRIPTION
+		"The name of the alert rule."
+	-- 1.3.6.1.4.1.52304.32
+::= { thousandeyesAlarmMIB 32 }
+
+
+trapAlertDateStart OBJECT-TYPE
+	SYNTAX  OCTET STRING
+	MAX-ACCESS read-only
+	STATUS  current
+	DESCRIPTION
+		"The date and time of when the alert was triggered."
+	-- 1.3.6.1.4.1.52304.34
+::= { thousandeyesAlarmMIB 34 }
+
+
+trapAlertDateEnd OBJECT-TYPE
+	SYNTAX  OCTET STRING
+	MAX-ACCESS read-only
+	STATUS  current
+	DESCRIPTION
+		"The date and time of when the alert was cleared."
+	-- 1.3.6.1.4.1.52304.35
+::= { thousandeyesAlarmMIB 35 }
+
+
+trapEventType OBJECT-TYPE
+	SYNTAX  OCTET STRING
+	MAX-ACCESS read-only
+	STATUS  current
+	DESCRIPTION
+		"The type of the event, e.g. ALERT_NOTIFICATION _TRIGGER, ALERT_NOTIFICATION _CLEAR, AGENT_ALERT_NOTIFICATION _TRIGGER, or AGENT_ALERT_NOTIFICATION _CLEAR."
+	-- 1.3.6.1.4.1.52304.36 ---- 1.3.6.1.4.1.52304.36
+::= { thousandeyesAlarmMIB 36 }
+
+
+trapAlertTestId OBJECT-TYPE
+	SYNTAX  Unsigned32
+	MAX-ACCESS read-only
+	STATUS  current
+	DESCRIPTION
+		"If the alert has been generated for a test, this field shall contains the ID of the test."
+	-- 1.3.6.1.4.1.52304.37 ---- 1.3.6.1.4.1.52304.37
+::= { thousandeyesAlarmMIB 37 }
+
+
+trapAlertPermalink OBJECT-TYPE
+	SYNTAX  OCTET STRING
+	MAX-ACCESS read-only
+	STATUS  current
+	DESCRIPTION
+		"The permalink URL for the alert. Applies only to alerts generated from tests."
+	-- 1.3.6.1.4.1.52304.38 ---- 1.3.6.1.4.1.52304.38
+::= { thousandeyesAlarmMIB 38 }
+
+
+trapAlertTestName OBJECT-TYPE
+	SYNTAX  OCTET STRING
+	MAX-ACCESS read-only
+	STATUS  current
+	DESCRIPTION
+		"Name of the test that triggered the alert. Applies only to alerts raised by tests."
+	-- 1.3.6.1.4.1.52304.39 ---- 1.3.6.1.4.1.52304.39
+::= { thousandeyesAlarmMIB 39 }
+
+
+trapAlertRuleExpression OBJECT-TYPE
+	SYNTAX  OCTET STRING
+	MAX-ACCESS read-only
+	STATUS  current
+	DESCRIPTION
+		"The syntax of the alert rule condition."
+	-- 1.3.6.1.4.1.52304.40 ---- 1.3.6.1.4.1.52304.40
+::= { thousandeyesAlarmMIB 40 }
+
+
+trapSeverity OBJECT-TYPE
+	SYNTAX  OCTET STRING
+	MAX-ACCESS read-only
+	STATUS  current
+	DESCRIPTION
+		"Severity of alert as shown in alert rule name; MAJOR or CLEARED by default."
+	-- 1.3.6.1.4.1.52304.41 ---- 1.3.6.1.4.1.52304.41
+::= { thousandeyesAlarmMIB 41 }
+
+
+trapAgentScope OBJECT-TYPE
+	SYNTAX  INTEGER
+	MAX-ACCESS read-only
+	STATUS  current
+	DESCRIPTION
+		"Number of agents involved in alert for a test."
+	-- 1.3.6.1.4.1.52304.42
+	::= { thousandeyesAlarmMIB 42 }
+
+
+trapAgentName OBJECT-TYPE
+	SYNTAX  OCTET STRING
+	MAX-ACCESS read-only
+	STATUS  current
+	DESCRIPTION
+		"Name of Agent that triggered the alert. Applies only to alerts for Enterprise Agents."
+	-- 1.3.6.1.4.1.52304.43
+	::= { thousandeyesAlarmMIB 43 }
+
+
+trapStartMetrics OBJECT-TYPE
+	SYNTAX  OCTET STRING
+	MAX-ACCESS read-only
+	STATUS  current
+	DESCRIPTION
+		"List of the test metrics that triggered the alert."
+	-- 1.3.6.1.4.1.52304.44
+	::= { thousandeyesAlarmMIB 44 }
+
+
+trapEmailMessage OBJECT-TYPE
+	SYNTAX  OCTET STRING
+	MAX-ACCESS read-only
+	STATUS  current
+	DESCRIPTION
+		"Email message field from alert rule configuration."
+	-- 1.3.6.1.4.1.52304.45
+	::= { thousandeyesAlarmMIB 45 }
+
+
+thousandeyesNotifications NOTIFICATION-GROUP
+	NOTIFICATIONS {
+		thousandeyesTrap }
+	STATUS  current
+	DESCRIPTION ""
+	-- 1.3.6.1.4.1.52304.33
+::= { thousandeyesAlarmMIB 33 }
+
+END
